@@ -3,6 +3,7 @@
 #include "../BlurAPI.hpp"
 #include "BlurRenderTex.hpp"
 #include "BlurOptions.hpp"
+#include "Geode/cocos/platform/win32/CCGL.h"
 
 using namespace geode::prelude;
 using namespace BlurAPI;
@@ -88,18 +89,16 @@ class $modify (CCNode)
             auto scX = (1.0f / CCDirector::get()->getWinSize().width) * CCEGLView::get()->getFrameSize().width;
             auto scY = (1.0f / CCDirector::get()->getWinSize().height) * CCEGLView::get()->getFrameSize().height;
 
-            auto uiBL = ccp(rec.getMinX() * scX, rec.getMinY() * scY);
-            auto uiTR = ccp(rec.getMaxX() * scX, rec.getMaxY() * scY);
+            auto uiBottomLeft = ccp(rec.getMinX() * scX, rec.getMinY() * scY);
+            auto uiSize = ccp(rec.size.width * scX, rec.size.height * scY);
 
             auto shadow = 30 * BlurAPIOptions::passes;
 
-            glPushAttrib(GL_SCISSOR_BIT);
             glEnable(GL_SCISSOR_TEST);
-            glScissor(uiBL.x - shadow, uiBL.y - shadow, uiTR.x + shadow, uiTR.y + shadow);
+            glScissor(uiBottomLeft.x - shadow, uiBottomLeft.y - shadow, uiSize.x + shadow * 2, uiSize.y + shadow * 2);
 
             blur->clip->visit();
-
-            glPopAttrib();
+            glDisable(GL_SCISSOR_TEST);
 
             if (!getParent()) // its a scene, so we dont wanna render the original
                 return;
