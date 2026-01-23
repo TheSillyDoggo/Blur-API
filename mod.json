@@ -1,0 +1,44 @@
+{
+	"geode": "5.0.0-alpha.1",
+	"gd": {
+		"win": "2.2081",
+		"android": "2.2074",
+		"mac": "2.2074",
+		"ios": "2.2074"
+	},
+	"id": "thesillydoggo.blur-api",
+	"name": "Blur API",
+	"version": "v1.0.0",
+	"developer": "TheSillyDoggo",
+	"description": "",
+	"tags": [
+		"api"
+	],
+	"resources": {
+		"files": [
+			"resources/shaders/opengl/*.glsl",
+			"resources/shaders/gles/*.glsl"
+		]
+	},
+	"settings": {
+		"enabled": {
+			"type": "bool",
+			"name": "Enabled",
+			"description": "Enables blur rendering",
+			"default": true
+		},
+		"passes": {
+			"type": "int",
+			"name": "Blur Passes",
+			"description": "The quality of the shader",
+			"min": 3,
+			"max": 10,
+			"default": {
+				"win": 5,
+				"mac": 5,
+				"android": 3,
+				"ios": 3
+			}
+		}
+	}
+}
