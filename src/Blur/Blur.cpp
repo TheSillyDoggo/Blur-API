@@ -16,7 +16,6 @@ struct Shader {
 struct RenderTexture {
     GLuint fbo = 0;
     GLuint tex = 0;
-    GLuint rbo = 0;
 
     void setup(GLsizei width, GLsizei height);
     void cleanup();
@@ -158,11 +157,6 @@ void RenderTexture::setup(GLsizei width, GLsizei height) {
 
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, tex, 0);
 
-    glGenRenderbuffers(1, &rbo);
-    glBindRenderbuffer(GL_RENDERBUFFER, rbo);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
-
     if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
         log::error("pp fbo not complete, uh oh! i guess i will have to cut off ur pp now");
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, drawFbo);
@@ -174,11 +168,8 @@ void RenderTexture::cleanup() {
         glDeleteFramebuffers(1, &fbo);
     if (tex)
         glDeleteTextures(1, &tex);
-    if (rbo)
-        glDeleteRenderbuffers(1, &rbo);
     fbo = 0;
     tex = 0;
-    rbo = 0;
 }
 
 std::string Blur::getShaderPath(bool vertexShader)
@@ -292,8 +283,10 @@ void Blur::drawBlurredNode(CCNode* node, BlurAPI::BlurOptions* options)
     glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING, &drawFbo);
     glGetIntegerv(GL_READ_FRAMEBUFFER_BINDING, &readFbo);
 
+    glBindFramebuffer(GL_FRAMEBUFFER, ppRt1.fbo);
+    glClear(GL_COLOR_BUFFER_BIT);
     glBindFramebuffer(GL_FRAMEBUFFER, ppRt0.fbo);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT);
     node->visit();
 
     glBindVertexArray(ppVao);
@@ -309,8 +302,6 @@ void Blur::drawBlurredNode(CCNode* node, BlurAPI::BlurOptions* options)
             GL_FRAMEBUFFER,
             ping ? ppRt1.fbo : ppRt0.fbo
         );
-
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         glBindTexture(
             GL_TEXTURE_2D,
