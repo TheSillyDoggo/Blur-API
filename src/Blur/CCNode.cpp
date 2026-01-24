@@ -62,8 +62,8 @@ class $modify (CCNode)
 
             if (!blur->rTex)
             {
-                auto size = CCDirector::get()->getWinSizeInPixels();
-                blur->rTex = BlurRenderTex::create(size.width, size.height);
+                auto size = CCDirector::get()->getWinSize();
+                blur->rTex = BlurRenderTex::create((int)(size.width), (int)(size.height));
                 static_cast<BlurRenderTex*>(blur->rTex)->options = blur;
                 blur->clip = CCClippingNode::create(this);
                 blur->clip->setAlphaThreshold(blur->alphaThreshold);
@@ -95,8 +95,8 @@ class $modify (CCNode)
             auto shadow = 30 * BlurAPIOptions::passes;
 
             auto sciz = glIsEnabled(GL_SCISSOR_TEST);
-            glEnable(GL_SCISSOR_TEST);
-            glScissor(uiBL.x - shadow, uiBL.y - shadow, uiTR.x + shadow, uiTR.y + shadow);
+            // glEnable(GL_SCISSOR_TEST);
+            // glScissor(uiBL.x - shadow, uiBL.y - shadow, uiTR.x + shadow, uiTR.y + shadow);
 
             blur->clip->visit();
 
