@@ -37,4 +37,15 @@ namespace BlurAPI
     {
         node->setUserObject(BLUR_TAG, nullptr);
     }
+
+    inline bool isBlurAPIEnabled()
+    {
+        if (auto blur = geode::Loader::get()->getLoadedMod("thesillydoggo.blur_api"))
+        {
+            if (blur->getSettingValue<bool>("enabled"))
+                return true;
+        }
+
+        return false;
+    }
 };

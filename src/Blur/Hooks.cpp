@@ -1,6 +1,7 @@
 #include "Blur.hpp"
 #include <Geode/modify/CCEGLViewProtocol.hpp>
 #include <Geode/modify/GameManager.hpp>
+#include <Geode/modify/AppDelegate.hpp>
 
 class $modify(CCEGLViewProtocol)
 {
@@ -32,3 +33,14 @@ $on_mod(Loaded)
         setupPostProcess();
     });
 }
+
+class $modify (AppDelegate)
+{
+    virtual void applicationWillBecomeActive()
+    {
+        AppDelegate::applicationWillBecomeActive();
+
+        cleanupPostProcess();
+        setupPostProcess();
+    }
+};

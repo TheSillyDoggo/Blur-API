@@ -1,5 +1,6 @@
 #include <Geode/Geode.hpp>
 #include <Geode/modify/CCNode.hpp>
+#include <Geode/modify/CCLayerColor.hpp>
 #include "../BlurAPI.hpp"
 #include "BlurRenderTex.hpp"
 #include "BlurOptions.hpp"
@@ -19,6 +20,20 @@ CCRect getWorldSpaceBoundingBox(CCNode* node)
 
 	return CCRectMake(min.x, min.y, max.x - min.x, max.y - min.y);
 }
+
+class $modify (CCLayerColor)
+{
+    virtual void draw()
+    {
+        if (!BlurAPI::getOptions(this))
+            return CCLayerColor::draw();
+
+        auto c = getColor();
+        auto o = getOpacity();
+
+        ccDrawSolidRect(ccp(0, 0), getContentSize(), ccc4f(c.r / 255.0f, c.g / 255.0f, c.b / 255.0f, o / 255.0f));
+    }
+};
 
 class $modify (CCNode)
 {
@@ -63,6 +78,7 @@ class $modify (CCNode)
                 blur->rTex = BlurRenderTex::create((int)(size.width), (int)(size.height));
                 static_cast<BlurRenderTex*>(blur->rTex)->options = blur;
                 blur->clip = CCClippingNode::create(this);
+                this->release(); // we dont want clippingnode to retain our node, its a child so it'll just cause it to be retained forever and leak memory
                 blur->clip->setAlphaThreshold(blur->alphaThreshold);
                 blur->clip->addChild(blur->rTex);
             }
