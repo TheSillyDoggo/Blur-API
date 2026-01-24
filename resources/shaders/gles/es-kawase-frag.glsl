@@ -17,10 +17,10 @@ void main()
 
     float i = pass + 0.5;
     
-    vec3 col = texture2D(screen, uv + vec2( i, i ) / res ).rgb;
-    col += texture2D(screen, uv + vec2( i, -i ) / res ).rgb;
-    col += texture2D(screen, uv + vec2( -i, i ) / res ).rgb;
-    col += texture2D(screen, uv + vec2( -i, -i ) / res ).rgb;
+    vec3 col = texture(screen, uv + vec2( i, i ) / res ).rgb;
+    col += texture(screen, uv + vec2( i, -i ) / res ).rgb;
+    col += texture(screen, uv + vec2( -i, i ) / res ).rgb;
+    col += texture(screen, uv + vec2( -i, -i ) / res ).rgb;
     col /= 4.0;
 
     FragColor = vec4(col, 1.0);
