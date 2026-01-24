@@ -3,7 +3,6 @@
 #include "../BlurAPI.hpp"
 #include "BlurRenderTex.hpp"
 #include "BlurOptions.hpp"
-#include "Geode/cocos/platform/win32/CCGL.h"
 
 using namespace geode::prelude;
 using namespace BlurAPI;
