@@ -3,7 +3,7 @@
 #include <numbers>
 #include <Geode/Geode.hpp>
 #include "../BlurAPI.hpp"
-#incldue "GLUtils.hpp"
+#include "GLUtils.hpp"
 
 using namespace geode::prelude;
 
