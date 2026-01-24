@@ -93,13 +93,14 @@ class $modify (CCNode)
 
             auto shadow = 30 * BlurAPIOptions::passes;
 
-            glPushAttrib(GL_SCISSOR_BIT);
+            auto sciz = glIsEnabled(GL_SCISSOR_TEST);
             glEnable(GL_SCISSOR_TEST);
             glScissor(uiBL.x - shadow, uiBL.y - shadow, uiTR.x + shadow, uiTR.y + shadow);
 
             blur->clip->visit();
 
-            glPopAttrib();
+            if (!sciz)
+                glDisable(GL_SCISSOR_TEST);
 
             if (!getParent()) // its a scene, so we dont wanna render the original
                 return;
