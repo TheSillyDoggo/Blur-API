@@ -39,9 +39,6 @@ class $modify (CCNode)
             }
             else
             {
-                if (auto blur = typeinfo_cast<BlurOptions*>(getUserObject(BLUR_TAG)))
-                    return;
-
                 if (auto shader = typeinfo_cast<ShaderLayer*>(this))
                     return;
 
@@ -95,8 +92,8 @@ class $modify (CCNode)
             auto shadow = 30 * BlurAPIOptions::passes;
 
             auto sciz = glIsEnabled(GL_SCISSOR_TEST);
-            // glEnable(GL_SCISSOR_TEST);
-            // glScissor(uiBL.x - shadow, uiBL.y - shadow, uiTR.x + shadow, uiTR.y + shadow);
+            glEnable(GL_SCISSOR_TEST);
+            glScissor(uiBL.x - shadow, uiBL.y - shadow, uiTR.x + shadow, uiTR.y + shadow);
 
             blur->clip->visit();
 

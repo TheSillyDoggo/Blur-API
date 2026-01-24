@@ -31,9 +31,6 @@ GLint ppShaderFirst = 0;
 GLint ppShaderRadius = 0;
 GLint ppShaderPass = 0;
 
-float blurTimer = 0.f;
-
-
 Result<std::string> Shader::compile(const std::filesystem::path& vertexPath, const std::filesystem::path& fragmentPath) {
     auto vertexSource = file::readString(vertexPath);
     if (!vertexSource)
@@ -176,17 +173,10 @@ std::string Blur::getShaderPath(bool vertexShader)
 {
     std::string path = "";
 
-    #ifdef GEODE_IS_MOBILE
     if (vertexShader)
-        path = "es-kawase-vert.glsl";
+        path = "kawase-vert.glsl";
     else
-        path = "es-kawase-frag.glsl";
-    #else
-    if (vertexShader)
-        path = "gl-kawase-vert.glsl";
-    else
-        path = "gl-kawase-frag.glsl";
-    #endif
+        path = "kawase-frag.glsl";
 
     return CCFileUtils::get()->fullPathForFilename(fmt::format("{}{}", ""_spr, path).c_str(), false);
 }

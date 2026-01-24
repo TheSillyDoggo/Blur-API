@@ -4,6 +4,7 @@
 #include <Geode/modify/ColorSelectLiveOverlay.hpp>
 #include <Geode/modify/HSVLiveOverlay.hpp>
 #include <Geode/modify/CCScene.hpp>
+#include <Geode/modify/OptionsLayer.hpp>
 #include "BlurAPI.hpp"
 
 using namespace geode::prelude;
@@ -22,7 +23,7 @@ class $modify (MenuLayer)
 
         BlurAPI::addBlur(test);
         BlurAPI::getOptions(test)->forcePasses = true;
-        BlurAPI::getOptions(test)->passes = 3;
+        BlurAPI::getOptions(test)->passes = 5;
         addChild(test, 10);
 
         auto test2 = CCScale9Sprite::create("GJ_square01.png");
@@ -67,6 +68,16 @@ class $modify (MenuLayer)
         addChild(test5);
         addChild(test6);*/
         return true;
+    }
+};
+
+class $modify (OptionsLayer)
+{
+    virtual void customSetup()
+    {
+        OptionsLayer::customSetup();
+
+        BlurAPI::addBlur(this);
     }
 };
 

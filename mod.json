@@ -1,5 +1,5 @@
 {
-	"geode": "4.10.1",
+	"geode": "5.0.0-alpha.1",
 	"gd": {
 		"win": "2.2081",
 		"android": "2.2074",
@@ -16,8 +16,7 @@
 	],
 	"resources": {
 		"files": [
-			"resources/shaders/opengl/*.glsl",
-			"resources/shaders/gles/*.glsl"
+			"resources/shaders/*.glsl"
 		]
 	},
 	"settings": {
@@ -36,8 +35,8 @@
 			"default": {
 				"win": 5,
 				"mac": 5,
-				"android": 3,
-				"ios": 3
+				"android": 5,
+				"ios": 5
 			}
 		}
 	}

@@ -26,4 +26,4 @@ BlurAPI::getOptions(node)->forcePasses = true;
 BlurAPI::getOptions(node)->passes = 5;
 ```
 
-You do not need to add blur api as a dependency if you include the header, the mod will work just fince if the user doesn't have Blur API installed
+You do not need to add blur api as a dependency if you include the header, the mod will work just fine if the user doesn't have Blur API installed

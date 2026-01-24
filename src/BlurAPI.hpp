@@ -20,9 +20,14 @@ namespace BlurAPI
             CREATE_FUNC(BlurOptions);
     };
 
+    inline BlurOptions* getOptions(cocos2d::CCNode* node)
+    {
+        return static_cast<BlurOptions*>(node->getUserObject(BLUR_TAG));
+    }
+
     inline void addBlur(cocos2d::CCNode* node)
     {
-        if (node->getUserObject(BLUR_TAG))
+        if (getOptions(node))
             return;
 
         node->setUserObject(BLUR_TAG, BlurOptions::create());
@@ -31,10 +36,5 @@ namespace BlurAPI
     inline void removeBlur(cocos2d::CCNode* node)
     {
         node->setUserObject(BLUR_TAG, nullptr);
-    }
-
-    inline BlurOptions* getOptions(cocos2d::CCNode* node)
-    {
-        return static_cast<BlurOptions*>(node->getUserObject(BLUR_TAG));
     }
 };
