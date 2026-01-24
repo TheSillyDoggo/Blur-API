@@ -63,7 +63,7 @@ class $modify (CCNode)
             if (!blur->rTex)
             {
                 auto size = CCDirector::get()->getWinSizeInPixels();
-                blur->rTex = BlurRenderTex::create(size.width, size.heigth);
+                blur->rTex = BlurRenderTex::create(size.width, size.height);
                 static_cast<BlurRenderTex*>(blur->rTex)->options = blur;
                 blur->clip = CCClippingNode::create(this);
                 blur->clip->setAlphaThreshold(blur->alphaThreshold);
