@@ -7,7 +7,7 @@ BlurRenderTex* BlurRenderTex::create(int width, int height)
 {
     auto pRet = new BlurRenderTex();
 
-    if (pRet && pRet->initWithWidthAndHeight(width, height, kCCTexture2DPixelFormat_RGBA8888))
+    if (pRet && pRet->initWithWidthAndHeight(width, height, kCCTexture2DPixelFormat_RGBA8888, GL_DEPTH24_STENCIL8))
     {
         pRet->init();
         pRet->autorelease();
