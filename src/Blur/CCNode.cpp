@@ -31,6 +31,7 @@ class $modify (CCLayerColor)
         auto c = getColor();
         auto o = getOpacity();
 
+        ccBlendFunc(getBlendFunc());
         ccDrawSolidRect(ccp(0, 0), getContentSize(), ccc4f(c.r / 255.0f, c.g / 255.0f, c.b / 255.0f, o / 255.0f));
     }
 };

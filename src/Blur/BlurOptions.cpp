@@ -6,12 +6,12 @@ using namespace geode::prelude;
 
 $on_mod(Loaded)
 {
-    listenForSettingChanges("enabled", [](bool value)
+    listenForSettingChanges<bool>("enabled", [](bool value)
     {
         BlurAPIOptions::enabled = value;
     });
 
-    listenForSettingChanges("passes", [](int value)
+    listenForSettingChanges<int>("passes", [](int value)
     {
         BlurAPIOptions::passes = value;
     });
